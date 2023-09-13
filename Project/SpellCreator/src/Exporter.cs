@@ -101,7 +101,7 @@ namespace SpellCreator
             catch (Exception e)
             {
                 MessageBox.Show("Error when importing the spell data. It might have an incorrect format or the file was modified.", "Import Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //Console.WriteLine("ERROR: " + e.Message);
+                Console.WriteLine("ERROR: " + e.Message);
             }
             return null;
         }

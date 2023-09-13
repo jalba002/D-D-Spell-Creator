@@ -6,74 +6,12 @@
         xmlns:local="clr-namespace:SpellCreator"
         mc:Ignorable="d"
         x:Name="WindowElement"
-        Title="D&amp;D Spell Creator" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize" WindowStyle="ThreeDBorderWindow" MinWidth="600" MinHeight="400"
+        Title="D&amp;D Spell Creator" SizeToContent="Height" WindowStyle="ThreeDBorderWindow" MinWidth="800" MinHeight="480" Width="800" Height="480"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <Style x:Key="WaterMark" TargetType="{x:Type TextBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Grid>
-                            <Border Background="White" BorderBrush="#FF7D8683" BorderThickness="1"/>
-                            <ScrollViewer x:Name="PART_ContentHost"/>
-                            <Label x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                Visibility="Collapsed" Foreground="Gray" FontSize="12"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Text" Value=""/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="DarkGray"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style TargetType="{x:Type ColumnDefinition}">
             <Setter Property="Width" Value="auto"/>
-        </Style>
-        <Style x:Key="Showcase">
-            <!--<Setter Property="ItemsControl.FontFamily" Value="Arial"></Setter>-->
-            <Setter Property="ItemsControl.FontSize" Value="12"></Setter>
-            <Setter Property="ItemsControl.MaxWidth" Value="100"></Setter>
-            <Setter Property="ItemsControl.MinWidth" Value="25"></Setter>
-            <Setter Property="ItemsControl.Height" Value="30"></Setter>
-        </Style>
-        <Style x:Key="Title">
-            <Setter Property="Grid.Column" Value="0"></Setter>
-            <Setter Property="ItemsControl.MaxWidth" Value="100"></Setter>
-            <Setter Property="ItemsControl.MinWidth" Value="80"></Setter>
-        </Style>
-        <Style x:Key="Field">
-            <Setter Property="ItemsControl.MinHeight" Value="20"></Setter>
-            <Setter Property="ItemsControl.MaxWidth" Value="200"></Setter>
-            <Setter Property="Grid.Column" Value="1"></Setter>
-            <Setter Property="Grid.ColumnSpan" Value="1"></Setter>
-            <Setter Property="TextBlock.Margin" Value="5"></Setter>
-        </Style>
-        <Style x:Key="LargeField">
-            <Setter Property="ItemsControl.MinHeight" Value="20"></Setter>
-            <Setter Property="Grid.Column" Value="1"></Setter>
-            <Setter Property="Grid.ColumnSpan" Value="1"></Setter>
-            <Setter Property="TextBlock.Margin" Value="5"></Setter>
-        </Style>
-        <Style x:Key="Toggle">
-            <Setter Property="ItemsControl.IsManipulationEnabled" Value="True"></Setter>
-            <Setter Property="TextBlock.Margin" Value="5"></Setter>
-            <!--<Setter Property="ItemsControl.Foreground" Value="Red"></Setter>-->
-        </Style>
-        <Style x:Key="GroupBoxContainer">
-            <Setter Property="ItemsControl.MaxWidth" Value="300"></Setter>
-            <Setter Property="ItemsControl.MinWidth" Value="200"></Setter>
-        </Style>
-        <Style x:Key="LargeGroupBoxContainer">
-            <Setter Property="ItemsControl.MinWidth" Value="200"></Setter>
         </Style>
     </Window.Resources>
     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" Width="auto">
@@ -102,21 +40,21 @@
                 <MenuItem Header="Debug Currentspell" Click="DisplaySpell"></MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl x:Name="TabControl_SpellCreator">
-            <TabItem Header="Spell Creator">
+        <TabControl x:Name="TabControl_Main">
+            <TabItem Name="Tabs_SpellCreator" Header="Spell Creator">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <GroupBox Grid.Column="0" Header="Spell Data" Width="auto" DockPanel.Dock="Top" Style="{StaticResource GroupBoxContainer}">
-                        <Grid Background="White" Height="auto" Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False">
+                    <GroupBox Grid.Column="0" Header="Spell Data" Width="auto" Style="{StaticResource Spell.Creator.GroupBox}">
+                        <Grid Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="*"/>
@@ -128,36 +66,33 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <!-- This row will receive all remaining Height -->
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-
-                            <Label Grid.Row="0" Style="{StaticResource Title}">Name</Label>
-                            <TextBox Grid.Row="0" Style="{StaticResource Field}" Text="{Binding Path=CurrentSpell.name, Mode=TwoWay}"></TextBox>
-
-                            <Label Grid.Row="1" Style="{StaticResource Title}">Level</Label>
-                            <ComboBox Grid.Row="1" Style="{StaticResource Field}" ItemsSource="{Binding Path=DndDatabase.Levels_GetActive}" DisplayMemberPath="level" SelectedValuePath="level" SelectedValue="{Binding Path=CurrentSpell.level, Mode=TwoWay}"></ComboBox>
-
-                            <Label Grid.Row="2" Style="{StaticResource Title}">School</Label>
-                            <ComboBox Grid.Row="2" Style="{StaticResource Field}" ItemsSource="{Binding Path=DndDatabase.Schools_GetActive}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Path=CurrentSpell.school, Mode=TwoWay}"/>
-
-                            <Label Grid.Row="3" Style="{StaticResource Title}">Casting Time</Label>
-                            <ComboBox Grid.Row="3" Style="{StaticResource Field}" ItemsSource="{Binding Path=DndDatabase.CastTimes_GetActive}" DisplayMemberPath="castTime" SelectedValuePath="castTime" SelectedValue="{Binding Path=CurrentSpell.casting_time, Mode=TwoWay}"></ComboBox>
-
-                            <Label Grid.Row="4" Style="{StaticResource Title}">Range</Label>
-                            <TextBox Grid.Row="4" Style="{StaticResource Field}" Text="{Binding Path=CurrentSpell.range, Mode=TwoWay}"></TextBox>
-
-                            <Label Grid.Row="5" Style="{StaticResource Title}">Duration</Label>
-                            <TextBox Grid.Row="5" Style="{StaticResource Field}" Text="{Binding Path=CurrentSpell.duration, Mode=TwoWay}"></TextBox>
-
-
-                            <CheckBox Style="{StaticResource Toggle}" Grid.Row ="6" IsChecked="{Binding Path=CurrentSpell.ritual, Mode=TwoWay}" Grid.Column="1">Ritual</CheckBox>
-                            <CheckBox Style="{StaticResource Toggle}" Grid.Row ="6" Grid.Column="1" HorizontalAlignment="Right" IsChecked="{Binding Path=CurrentSpell.concentration, Mode=TwoWay}">Concentration</CheckBox>
-
-                            <!--<RichTextBox Grid.Row="7" Grid.ColumnSpan="2" Name="spell_classes" Tag ="All usable classes, separated by commas." HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" Height="60" Width="240" />-->
+                            <!--Name-->
+                            <Label Grid.Row="0" Style="{StaticResource Spell.Creator.Title}">Name</Label>
+                            <TextBox Grid.Row="0" Style="{StaticResource Spell.Creator.Field}" Text="{Binding Path=CurrentSpell.name, Mode=TwoWay}"></TextBox>
+                            <!--Level-->
+                            <Label Grid.Row="1" Style="{StaticResource Spell.Creator.Title}">Level</Label>
+                            <ComboBox Grid.Row="1" Style="{StaticResource Spell.Creator.Field}" ItemsSource="{Binding Path=DndDatabase.Levels_GetActive}" DisplayMemberPath="level" SelectedValuePath="level" SelectedValue="{Binding Path=CurrentSpell.level, Mode=TwoWay}"></ComboBox>
+                            <!--School-->
+                            <Label Grid.Row="2" Style="{StaticResource Spell.Creator.Title}">School</Label>
+                            <ComboBox Grid.Row="2" Style="{StaticResource Spell.Creator.Field}" ItemsSource="{Binding Path=DndDatabase.Schools_GetActive}" DisplayMemberPath="name" SelectedValuePath="name" SelectedValue="{Binding Path=CurrentSpell.school, Mode=TwoWay}"/>
+                            <!--Casting Time-->
+                            <Label Grid.Row="3" Style="{StaticResource Spell.Creator.Title}">Casting Time</Label>
+                            <ComboBox Grid.Row="3" Style="{StaticResource Spell.Creator.Field}" ItemsSource="{Binding Path=DndDatabase.CastTimes_GetActive}" DisplayMemberPath="castTime" SelectedValuePath="castTime" SelectedValue="{Binding Path=CurrentSpell.casting_time, Mode=TwoWay}"></ComboBox>
+                            <!--Range-->
+                            <Label Grid.Row="4" Style="{StaticResource Spell.Creator.Title}">Range</Label>
+                            <TextBox Grid.Row="4" Style="{StaticResource Spell.Creator.Field}" Text="{Binding Path=CurrentSpell.range, Mode=TwoWay}"></TextBox>
+                            <!--Duration-->
+                            <Label Grid.Row="5" Style="{StaticResource Spell.Creator.Title}">Duration</Label>
+                            <TextBox Grid.Row="5" Style="{StaticResource Spell.Creator.Field}" Text="{Binding Path=CurrentSpell.duration, Mode=TwoWay}"></TextBox>
+                            <!--Ritual-->
+                            <CheckBox Style="{StaticResource Spell.Current.Toggle}" Grid.Row ="6" IsChecked="{Binding Path=CurrentSpell.ritual, Mode=TwoWay}" Grid.Column="1">Ritual</CheckBox>
+                            <!--Concentration-->
+                            <CheckBox Style="{StaticResource Spell.Current.Toggle}" Grid.Row ="6" Grid.Column="1" HorizontalAlignment="Right" IsChecked="{Binding Path=CurrentSpell.concentration, Mode=TwoWay}">Concentration</CheckBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Grid.Column="0" Grid.Row="1" Header="Components" Width ="305" Height="auto" Style="{StaticResource GroupBoxContainer}">
+                    <GroupBox Grid.Column="0" Grid.Row="1" Header="Components" Height="auto" Style="{StaticResource Spell.Creator.GroupBox}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -168,32 +103,32 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <CheckBox Grid.Row="0" Grid.Column ="0" Style="{StaticResource Toggle}" Grid.ColumnSpan="3" IsChecked="{Binding Path=CurrentSpell.vocal, Mode=TwoWay}">Vocal</CheckBox>
-                            <CheckBox Grid.Row="0" Grid.Column ="1" Style="{StaticResource Toggle}" Grid.ColumnSpan="3" IsChecked="{Binding Path=CurrentSpell.somatic, Mode=TwoWay}">Somatic</CheckBox>
-                            <CheckBox x:Name="Checkbox_Material" Grid.Row="0" Grid.Column ="2" Style="{StaticResource Toggle}" Grid.ColumnSpan="3" IsChecked="{Binding Path=CurrentSpell.material, Mode=TwoWay}">Material</CheckBox>
+                            <CheckBox Grid.Row="0" Grid.Column ="0" Style="{StaticResource Spell.Current.Toggle}" IsChecked="{Binding Path=CurrentSpell.vocal, Mode=TwoWay}">Vocal</CheckBox>
+                            <CheckBox Grid.Row="0" Grid.Column ="1" Style="{StaticResource Spell.Current.Toggle}" IsChecked="{Binding Path=CurrentSpell.somatic, Mode=TwoWay}">Somatic</CheckBox>
+                            <CheckBox x:Name="Checkbox_Material" Grid.Row="0" Grid.Column ="2" Style="{StaticResource Spell.Current.Toggle}" IsChecked="{Binding Path=CurrentSpell.material, Mode=TwoWay}">Material</CheckBox>
                             <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" Text="{Binding Path=CurrentSpell.materialDescription, Mode=TwoWay}"
                                      IsEnabled="{Binding ElementName=Checkbox_Material, Path=IsChecked, TargetNullValue=False}"></TextBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Classes" Grid.Column="0" Grid.Row="3" Style="{StaticResource GroupBoxContainer}">
-                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource LargeField}" Text="{Binding Path=CurrentSpell.classes, Mode=TwoWay}"></TextBox>
+                    <GroupBox Header="Classes" Grid.Column="0" Grid.Row="2" Style="{StaticResource Spell.Creator.GroupBox}">
+                        <TextBox Grid.Row="0" Grid.Column="0" Style="{StaticResource Spell.Creator.LargeField}" Text="{Binding Path=CurrentSpell.classes, Mode=TwoWay}"></TextBox>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Grid.Row="0" Header="Spell Description" Style="{StaticResource GroupBoxContainer}">
+                    <GroupBox Name ="Spell_Creator_Description" Grid.Column="1" Grid.Row="0" Header="Spell Description" Style="{StaticResource Spell.Creator.GroupBox}">
                         <ScrollViewer Margin="5,7,5,5">
                             <RichTextBox Name ="spell_description" Width="auto" Height="auto"/>
                         </ScrollViewer>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Grid.Row="1" Header="Upcast Description" Style="{StaticResource GroupBoxContainer}">
+                    <GroupBox Name="Spell_Creator_DescriptionHigh" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Header="Upcast Description" Style="{StaticResource Spell.Creator.GroupBox}">
                         <ScrollViewer Margin="5">
                             <RichTextBox Name ="spell_higher" Width="auto" Height="auto"/>
                         </ScrollViewer>
                     </GroupBox>
-                    <GroupBox Header="Book Reference" Grid.Column="1" Grid.Row="3" Style="{StaticResource GroupBoxContainer}">
-                        <TextBox Style="{StaticResource LargeField}" Text="{Binding Path=CurrentSpell.book, Mode=TwoWay}"></TextBox>
+                    <GroupBox Header="Book Reference" Grid.Column="0" Grid.Row="3" Style="{StaticResource Spell.Creator.GroupBox}">
+                        <TextBox Style="{StaticResource Spell.Creator.LargeField}" Text="{Binding Path=CurrentSpell.book, Mode=TwoWay}"></TextBox>
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Spell Database">
+            <TabItem Name="Tabs_SpellDatabase" Header="Spell Database">
                 <Grid MinWidth="600" MinHeight="350">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -206,12 +141,12 @@
                     </Grid.RowDefinitions>
                     <ScrollViewer Grid.Row="0" Grid.RowSpan="2" Background="White" MaxHeight="350" Margin="0,0,5,0">
                         <StackPanel Name="spell_list" Width="auto" >
-                            <Button Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="2,2,2,0">
+                            <Button Style="{DynamicResource SpellListButton}" Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="2,2,2,0">
                                 <TextBlock Width="auto" Height="auto" Text="Spell Name" Margin="5,0,0,0"/>
                             </Button>
                         </StackPanel>
                     </ScrollViewer>
-                    <StackPanel Grid.Column="1" Width="auto" Style="{StaticResource GroupBoxContainer}">
+                    <StackPanel Grid.Column="1" Width="auto" Style="{StaticResource Spell.Creator.GroupBox}">
                         <Grid Background="White" Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -230,30 +165,30 @@
                                 <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" Style="{StaticResource Showcase}">Name</Label>
-                            <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource Showcase}" Content="{Binding Path=CurrentSpell.name, Mode=OneWay}"></Label>
+                            <Label Grid.Row="0" Style="{StaticResource Spell.Book.Showcase.Text}">Name</Label>
+                            <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource Spell.Book.Showcase.Text}" Content="{Binding Path=CurrentSpell.name, Mode=OneWay}"></Label>
 
-                            <Label Grid.Row="1" Style="{StaticResource Showcase}">Level</Label>
-                            <Label Grid.Row="1" Grid.Column="1"  Style="{StaticResource Showcase}" Content="{Binding Path=CurrentSpell.level, Mode=OneWay}"></Label>
+                            <Label Grid.Row="1" Style="{StaticResource Spell.Book.Showcase.Text}">Level</Label>
+                            <Label Grid.Row="1" Grid.Column="1"  Style="{StaticResource Spell.Book.Showcase.Text}" Content="{Binding Path=CurrentSpell.level, Mode=OneWay}"></Label>
 
-                            <Label Grid.Row="2" Style="{StaticResource Showcase}">School</Label>
-                            <Label Grid.Row="2" Grid.Column="1"  Style="{StaticResource Showcase}" Content="{Binding Path=CurrentSpell.school, Mode=OneWay}"/>
+                            <Label Grid.Row="2" Style="{StaticResource Spell.Book.Showcase.Text}">School</Label>
+                            <Label Grid.Row="2" Grid.Column="1"  Style="{StaticResource Spell.Book.Showcase.Text}" Content="{Binding Path=CurrentSpell.school, Mode=OneWay}"/>
 
-                            <Label Grid.Row="3" Style="{StaticResource Showcase}">Casting Time</Label>
-                            <Label Grid.Row="3" Grid.Column="1"  Style="{StaticResource Showcase}" Content="{Binding Path=CurrentSpell.casting_time, Mode=OneWay}"></Label>
+                            <Label Grid.Row="3" Style="{StaticResource Spell.Book.Showcase.Text}">Casting Time</Label>
+                            <Label Grid.Row="3" Grid.Column="1"  Style="{StaticResource Spell.Book.Showcase.Text}" Content="{Binding Path=CurrentSpell.casting_time, Mode=OneWay}"></Label>
 
-                            <Label Grid.Row="4" Style="{StaticResource Showcase}">Range</Label>
-                            <Label Grid.Row="4" Grid.Column="1"  Style="{StaticResource Showcase}" Content="{Binding Path=CurrentSpell.range, Mode=OneWay}"></Label>
+                            <Label Grid.Row="4" Style="{StaticResource Spell.Book.Showcase.Text}">Range</Label>
+                            <Label Grid.Row="4" Grid.Column="1"  Style="{StaticResource Spell.Book.Showcase.Text}" Content="{Binding Path=CurrentSpell.range, Mode=OneWay}"></Label>
 
-                            <Label Grid.Row="5" Style="{StaticResource Showcase}">Duration</Label>
-                            <Label Grid.Row="5" Grid.Column="1"  Style="{StaticResource Showcase}" Content="{Binding Path=CurrentSpell.duration, Mode=OneWay}"></Label>
-                            
-                            <Label Grid.Row="6" Style="{StaticResource Showcase}">Ritual</Label>
-                            <Label Grid.Row="6" Grid.Column="1"  Style="{StaticResource Showcase}" Content="{Binding Path=CurrentSpell.ritual, Mode=OneWay}"></Label>
+                            <Label Grid.Row="5" Style="{StaticResource Spell.Book.Showcase.Text}">Duration</Label>
+                            <Label Grid.Row="5" Grid.Column="1"  Style="{StaticResource Spell.Book.Showcase.Text}" Content="{Binding Path=CurrentSpell.duration, Mode=OneWay}"></Label>
 
-                            <Label Grid.Row="7" Style="{StaticResource Showcase}">Concentration</Label>
-                            <Label Grid.Row="7" Grid.Column="1"  Style="{StaticResource Showcase}" Content="{Binding Path=CurrentSpell.concentration, Mode=OneWay}"></Label>
-                            
+                            <Label Grid.Row="6" Style="{StaticResource Spell.Book.Showcase.Text}">Ritual</Label>
+                            <Label Grid.Row="6" Grid.Column="1"  Style="{StaticResource Spell.Book.Showcase.Text}" Content="{Binding Path=CurrentSpell.ritual, Mode=OneWay}"></Label>
+
+                            <Label Grid.Row="7" Style="{StaticResource Spell.Book.Showcase.Text}">Concentration</Label>
+                            <Label Grid.Row="7" Grid.Column="1"  Style="{StaticResource Spell.Book.Showcase.Text}" Content="{Binding Path=CurrentSpell.concentration, Mode=OneWay}"></Label>
+
                         </Grid>
                     </StackPanel>
                 </Grid>

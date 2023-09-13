@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="Spell.Creator.GroupBox">
+        <Setter Property="ItemsControl.MinWidth" Value="350"></Setter>
+    </Style>
+    <Style x:Key="LargeGroupBoxContainer">
+        <Setter Property="ItemsControl.MinWidth" Value="400"></Setter>
+    </Style>
+</ResourceDictionary>
