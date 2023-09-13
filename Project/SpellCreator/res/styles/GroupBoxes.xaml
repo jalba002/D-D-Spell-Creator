@@ -3,7 +3,7 @@
     <Style x:Key="Spell.Creator.GroupBox">
         <Setter Property="ItemsControl.MinWidth" Value="350"></Setter>
     </Style>
-    <Style x:Key="LargeGroupBoxContainer">
+    <Style x:Key="Spell.Creator.LargeGroupBox">
         <Setter Property="ItemsControl.MinWidth" Value="400"></Setter>
     </Style>
 </ResourceDictionary>

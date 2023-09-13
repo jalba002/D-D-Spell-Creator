@@ -6,6 +6,7 @@ using System.Windows.Documents;
 using System.Runtime.Remoting.Messaging;
 using System;
 using Newtonsoft.Json;
+using System.Windows.Media;
 
 namespace SpellCreator
 {
@@ -89,6 +90,12 @@ namespace SpellCreator
         private void DisplaySpell(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(JsonConvert.SerializeObject(currentSpell, Formatting.Indented), "Debugging Spell");
+        }
+
+        private void DarkMode(object sender, RoutedEventArgs e)
+        {
+            Resources.MergedDictionaries.Clear();
+            Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("res/styles/DarkTheme.xaml", UriKind.Relative) });
         }
     }
 }

@@ -6,10 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="res/styles/ButtonStyles.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="res/styles/TextBoxStyles.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="res/styles/GroupBoxes.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="res/styles/Spells.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="res/styles/LightTheme.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

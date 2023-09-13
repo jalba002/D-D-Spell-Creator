@@ -7,13 +7,33 @@
         <Setter Property="ItemsControl.MinWidth" Value="25"></Setter>
         <Setter Property="ItemsControl.Height" Value="30"></Setter>
     </Style>
-    <Style x:Key="Spell.Current.Toggle">
+    <Style TargetType="ToggleButton" x:Name="Spell_Creator_Toggle" x:Key="Spell.Creator.Toggle">
+        <Setter Property="ItemsControl.Foreground" Value="{DynamicResource Spell_Creator_Foreground}"></Setter>
+        <Setter Property="ItemsControl.Background" Value="{DynamicResource Spell_Creator_Background}"></Setter>
+    </Style>
+    <Style TargetType="ToggleButton" x:Key="Spell.Current.Toggle" BasedOn="{StaticResource Spell.Creator.Toggle}">
         <Setter Property="ItemsControl.IsManipulationEnabled" Value="True"></Setter>
         <Setter Property="TextBlock.Margin" Value="5"></Setter>
         <!--<Setter Property="ItemsControl.Foreground" Value="Red"></Setter>-->
     </Style>
+    <Style TargetType="RichTextBox">
+        <Setter Property="ItemsControl.Background" Value="{DynamicResource Spell_Creator_Background}"></Setter>
+        <Setter Property="ItemsControl.Foreground" Value="{DynamicResource Spell_Creator_Foreground}"></Setter>
+    </Style>
+    <Style TargetType="TabControl">
+        <Setter Property="ItemsControl.Background" Value="{DynamicResource Spell_Creator_Background}"></Setter>
+    </Style>
+    <Style TargetType="GroupBox">
+        <Setter Property="ItemsControl.Background" Value="{DynamicResource Spell_Creator_Background}"></Setter>
+        <Setter Property="ItemsControl.Foreground" Value="{DynamicResource Spell_Creator_Foreground}"></Setter>
+    </Style>
+    <Style TargetType="TabItem" x:Key="Spell.Creator.Background">
+        <Setter Property="ItemsControl.Background" Value="{DynamicResource Spell_Creator_Background}"></Setter>
+    </Style>
     <Style x:Key="Spell.Creator.Title">
         <Setter Property="ItemsControl.MinWidth" Value="80"></Setter>
+        <Setter Property="ItemsControl.Foreground" Value="{DynamicResource Spell_Creator_Foreground}"></Setter>
+        <Setter Property="ItemsControl.Background" Value="{DynamicResource Spell_Creator_Background}"></Setter>
     </Style>
     <Style x:Key="Spell.Creator.Field">
         <Setter Property="ItemsControl.MinHeight" Value="20"></Setter>
